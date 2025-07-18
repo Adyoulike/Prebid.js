@@ -1,4 +1,4 @@
-import {buildUrl, deepAccess, parseSizesInput} from '../src/utils.js';
+import {buildUrl, deepAccess, parseSizesInput, triggerPixel} from '../src/utils.js';
 import {registerBidder} from '../src/adapters/bidderFactory.js';
 import { config } from '../src/config.js';
 import {find} from '../src/polyfill.js';
@@ -237,6 +237,20 @@ export const spec = {
       type: 'iframe',
       url: `https://visitor.omnitagjs.com/visitor/isync?uid=19340f4f097d16f41f34fc0274981ca4${params}`
     }];
+  },
+  /**
+   * Trigger a report on bid won
+   *
+   * @param {Bid} bid The bid that won the auction
+   */
+  onBidWon: function (bid) {
+    if (bid == null) {
+      return;
+    }
+
+    if (bid.hasOwnProperty('nurl') && bid.nurl.length > 0) {
+      triggerPixel(bid.nurl);
+    }
   }
 }
 

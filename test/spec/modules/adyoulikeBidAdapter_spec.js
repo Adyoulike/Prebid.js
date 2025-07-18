@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { spec } from 'modules/adyoulikeBidAdapter.js';
 import { newBidder } from 'src/adapters/bidderFactory.js';
 import { config } from 'src/config.js';
+import * as utils from '../../../src/utils.js';
 
 describe('Adyoulike Adapter', function () {
   const canonicalUrl = 'https://canonical.url/?t=%26';
@@ -1025,6 +1026,41 @@ describe('Adyoulike Adapter', function () {
         expect(spec.getUserSyncs(userSyncConfig, {}, undefined, undefined)).to.deep.equal(emptySync);
         expect(spec.getUserSyncs(userSyncConfig, {}, {gdprApplies: true, consentString: 'foo'}, 'bar')).to.deep.equal(emptySync);
       });
+    });
+  });
+
+  describe('onBidWon', function () {
+    beforeEach(function () {
+      sinon.stub(utils, 'triggerPixel');
+    });
+
+    afterEach(function () {
+      utils.triggerPixel.restore();
+    });
+
+    it('be a function', () => {
+      expect(spec.onBidWon).to.exist.and.to.be.a('function');
+    });
+
+    it('not be called when the bid is missing', function () {
+      spec.onBidWon(null);
+      expect(utils.triggerPixel.callCount).to.equal(0);
+    });
+
+    it('not be called when there is no nurl', function () {
+      spec.onBidWon({});
+      expect(utils.triggerPixel.callCount).to.equal(0);
+    });
+
+    it('should trigger a pixel with nurl', function () {
+      const bid = {
+        nurl: 'https://example.org/pixel/win_notification',
+      };
+
+      spec.onBidWon(bid);
+
+      expect(utils.triggerPixel.calledOnce).to.equal(true);
+      expect(utils.triggerPixel.calledWith(bid.nurl)).to.equal(true);
     });
   });
 });
