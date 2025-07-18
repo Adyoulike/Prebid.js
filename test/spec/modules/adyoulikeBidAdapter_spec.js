@@ -653,7 +653,7 @@ describe('Adyoulike Adapter', function () {
       expect(request.url).to.contains('PageUrl=' + encodeURIComponent(pageUrl));
       expect(request.url).to.contains('PageReferrer=' + encodeURIComponent(referrerUrl));
 
-      expect(payload.Version).to.equal('1.0');
+      expect(payload.Version).to.equal('1.1');
       expect(payload.Bids['bid_id_0'].PlacementID).to.be.equal('placement_0');
       expect(payload.PageRefreshed).to.equal(false);
       expect(payload.Bids['bid_id_0'].TransactionID).to.be.equal('bid_id_0_transaction_id');
@@ -755,7 +755,7 @@ describe('Adyoulike Adapter', function () {
       expect(request.url).to.contains('PageUrl=' + encodeURIComponent(pageUrl));
       expect(request.url).to.contains('PageReferrer=' + encodeURIComponent(referrerUrl));
 
-      expect(payload.Version).to.equal('1.0');
+      expect(payload.Version).to.equal('1.1');
       expect(payload.Bids['bid_id_0'].PlacementID).to.be.equal('placement_0');
       expect(payload.PageRefreshed).to.equal(false);
       expect(payload.Bids['bid_id_0'].TransactionID).to.be.equal('bid_id_0_transaction_id');
@@ -771,7 +771,7 @@ describe('Adyoulike Adapter', function () {
       expect(request.method).to.equal('POST');
 
       expect(request.url).to.not.contains('CanonicalUrl=' + encodeURIComponent(canonicalUrl));
-      expect(payload.Version).to.equal('1.0');
+      expect(payload.Version).to.equal('1.1');
       expect(payload.Bids['bid_id_0'].PlacementID).to.be.equal('placement_0');
       expect(payload.PageRefreshed).to.equal(false);
       expect(payload.pbjs_version).to.equal('$prebid.version$');
@@ -786,7 +786,7 @@ describe('Adyoulike Adapter', function () {
       expect(request.method).to.equal('POST');
 
       expect(request.url).to.not.contains('CanonicalUrl=' + encodeURIComponent(canonicalUrl));
-      expect(payload.Version).to.equal('1.0');
+      expect(payload.Version).to.equal('1.1');
       expect(payload.Bids['bid_id_0'].PlacementID).to.be.equal('placement_0');
       expect(payload.PageRefreshed).to.equal(false);
       expect(payload.pbjs_version).to.equal('$prebid.version$');
@@ -802,7 +802,7 @@ describe('Adyoulike Adapter', function () {
       expect(request.url).to.contains('CanonicalUrl=' + encodeURIComponent(canonicalUrl));
       expect(request.url).to.contains('RefererUrl=' + encodeURIComponent(referrerUrl));
 
-      expect(payload.Version).to.equal('1.0');
+      expect(payload.Version).to.equal('1.1');
 
       expect(payload.Bids['bid_id_0'].PlacementID).to.be.equal('placement_0');
       expect(payload.Bids['bid_id_1'].PlacementID).to.be.equal('placement_1');

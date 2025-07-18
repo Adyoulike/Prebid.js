@@ -11,7 +11,7 @@ import { convertOrtbRequestToProprietaryNative } from '../src/native.js';
  * @typedef {import('../src/adapters/bidderFactory.js').BidderRequest} BidderRequest
  */
 
-const VERSION = '1.0';
+const VERSION = '1.1';
 const BIDDER_CODE = 'adyoulike';
 const DEFAULT_DC = 'hb-api';
 const CURRENCY = 'USD';
