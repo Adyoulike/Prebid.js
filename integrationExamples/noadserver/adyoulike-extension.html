@@ -1,0 +1,91 @@
+<!--
+  This page runs an auction for one ad unit, using the AdYouLike prebid adapter and passing the additional OW extension.
+  rather than sending targeting to an ad server.
+
+  Run `gulp serve --notest --nolint --modules=adyoulikeBidAdapter`
+
+  then navigate to
+
+  `http://localhost:9999/integrationExamples/noadserver/adyoulike-extension.html?pbjs_debug=true`
+-->
+<html lang="en">
+<head>
+    <title>AdYoulike - OW Extension test page</title>
+
+    <script src="../../build/dev/prebid.js" async></script>
+    <script>
+        const adUnits = [
+            {
+                code: 'test-ad-div',
+                mediaTypes: {
+                    banner: {
+                        sizes: [[300, 250]]
+                    }
+                },
+                bids: [
+                    {
+                        bidder: 'adyoulike',
+                        params: {
+                            placement: '64f4ca17a602ec223b01665301c83be7'
+                        },
+                        ortb2Imp: {
+                            ext: {
+                                ow: {
+                                    source: "independent_ad"
+                                }
+                            }
+                        },
+                    }
+                ],
+                ortb2Imp: {
+                    ext: {
+                        gpid: "/39694909/Test/AdYouLike"
+                    }
+                }
+            }
+        ];
+
+        var pbjs = pbjs || {};
+        pbjs.que = pbjs.que || [];
+
+        pbjs.que.push(function() {
+            pbjs.addAdUnits(adUnits);
+        });
+
+        function renderAllAdUnits() {
+            const winners = pbjs.getHighestCpmBids();
+            for (let i = 0; i < winners.length; i++) {
+                renderOne(winners[i]);
+            }
+        }
+
+        function renderOne(winningBid) {
+            if (winningBid && winningBid.adId) {
+                const div = document.getElementById(winningBid.adUnitCode);
+
+                if (div) {
+                    let iframe = document.createElement('iframe');
+                    iframe.frameBorder = '0';
+                    div.appendChild(iframe);
+
+                    const iframeDoc = iframe.contentWindow.document;
+                    pbjs.renderAd(iframeDoc, winningBid.adId);
+                }
+            }
+        }
+
+        pbjs.que.push(function() {
+            pbjs.requestBids({
+                timeout: 2000,
+                bidsBackHandler: renderAllAdUnits
+            });
+        });
+    </script>
+</head>
+
+<body>
+<h2>AdYouLike test with OpenWeb extension</h2>
+
+<div id='test-ad-div'></div>
+</body>
+</html>
