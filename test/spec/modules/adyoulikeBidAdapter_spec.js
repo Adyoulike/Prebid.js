@@ -659,9 +659,11 @@ describe('Adyoulike Adapter', function () {
       expect(request.url).to.contain(getEndpoint());
     });
 
-    it('should add gdpr/usp consent information and SChain to the request', function () {
+    it('should add gdpr/usp/gpp consent information and SChain to the request', function () {
       let consentString = 'BOJ8RZsOJ8RZsABAB8AAAAAZ+A==';
       let uspConsentData = '1YCC';
+      let gppString = 'DBACNY~CPXxRfAPXxRfAAfKABENB-CgAAAAAAAAAAYgAAAAAAAA~1YNN';
+      let applicableSections = [2, 7];
       let bidderRequest = {
         'auctionId': '1d1a030790a475',
         'bidderRequestId': '22edbae2733bf6',
@@ -670,7 +672,11 @@ describe('Adyoulike Adapter', function () {
           consentString: consentString,
           gdprApplies: true
         },
-        'uspConsent': uspConsentData
+        'uspConsent': uspConsentData,
+        'gppConsent': {
+          gppString: gppString,
+          applicableSections: applicableSections
+        }
       };
 
       bidderRequest.bids = bidRequestWithSinglePlacement;
@@ -682,6 +688,8 @@ describe('Adyoulike Adapter', function () {
       expect(payload.gdprConsent.consentString).to.exist.and.to.equal(consentString);
       expect(payload.gdprConsent.consentRequired).to.exist.and.to.be.true;
       expect(payload.uspConsent).to.exist.and.to.equal(uspConsentData);
+      expect(payload.gppConsent.gppString).to.exist.and.to.equal(gppString);
+      expect(payload.gppConsent.gppSid).to.exist.and.to.deep.equal(applicableSections);
       expect(payload.Bids.bid_id_0.SChain).to.exist.and.to.deep.equal(bidRequestWithSinglePlacement[0].schain);
     });
 

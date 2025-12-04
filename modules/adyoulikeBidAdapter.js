@@ -129,6 +129,18 @@ export const spec = {
       payload.uspConsent = bidderRequest.uspConsent;
     }
 
+    if (bidderRequest.gppConsent) {
+      payload.gppConsent = {
+        gppString: bidderRequest.gppConsent.gppString,
+        gppSid: bidderRequest.gppConsent.applicableSections
+      }
+    } else if (bidderRequest.ortb2?.regs?.gpp) {
+      payload.gppConsent = {
+        gppString: bidderRequest.ortb2.regs.gpp,
+        gppSid: bidderRequest.ortb2.regs.gpp_sid
+      }
+    }
+
     if (bidderRequest.ortb2) {
       payload.ortb2 = bidderRequest.ortb2;
     }
