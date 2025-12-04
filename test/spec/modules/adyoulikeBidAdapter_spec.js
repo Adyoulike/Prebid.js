@@ -115,7 +115,8 @@ describe('Adyoulike Adapter', function () {
       },
       ortb2Imp: {
         ext: {
-          tid: 'bid_id_0_transaction_id'
+          tid: 'bid_id_0_transaction_id',
+          gpid: 'bid_id_0_gpid'
         }
       }
     }
@@ -331,7 +332,8 @@ describe('Adyoulike Adapter', function () {
         },
       ortb2Imp: {
         ext: {
-          tid: 'bid_id_0_transaction_id'
+          tid: 'bid_id_0_transaction_id',
+          gpid: 'bid_id_0_gpid'
         }
       },
     },
@@ -350,7 +352,8 @@ describe('Adyoulike Adapter', function () {
         },
       ortb2Imp: {
         ext: {
-          tid: 'bid_id_1_transaction_id'
+          tid: 'bid_id_1_transaction_id',
+          gpid: 'bid_id_1_gpid'
         }
       },
     },
@@ -362,7 +365,8 @@ describe('Adyoulike Adapter', function () {
       'sizes': '300x400',
       ortb2Imp: {
         ext: {
-          tid: 'bid_id_2_transaction_id'
+          tid: 'bid_id_2_transaction_id',
+          gpid: 'bid_id_2_gpid'
         }
       },
     },
@@ -375,7 +379,8 @@ describe('Adyoulike Adapter', function () {
       },
       ortb2Imp: {
         ext: {
-          tid: 'bid_id_3_transaction_id'
+          tid: 'bid_id_3_transaction_id',
+          gpid: 'bid_id_3_gpid'
         }
       },
     }
@@ -753,6 +758,7 @@ describe('Adyoulike Adapter', function () {
       expect(payload.Bids['bid_id_0'].PlacementID).to.be.equal('placement_0');
       expect(payload.PageRefreshed).to.equal(false);
       expect(payload.Bids['bid_id_0'].TransactionID).to.be.equal('bid_id_0_transaction_id');
+      expect(payload.Bids['bid_id_0'].GPID).to.be.equal('bid_id_0_gpid');
       expect(payload.ortb2).to.deep.equal({site: {page: pageUrl, ref: referrerUrl}});
     });
 
@@ -804,6 +810,9 @@ describe('Adyoulike Adapter', function () {
       expect(payload.Bids['bid_id_0'].TransactionID).to.be.equal('bid_id_0_transaction_id');
       expect(payload.Bids['bid_id_1'].TransactionID).to.be.equal('bid_id_1_transaction_id');
       expect(payload.Bids['bid_id_3'].TransactionID).to.be.equal('bid_id_3_transaction_id');
+      expect(payload.Bids['bid_id_0'].GPID).to.be.equal('bid_id_0_gpid');
+      expect(payload.Bids['bid_id_1'].GPID).to.be.equal('bid_id_1_gpid');
+      expect(payload.Bids['bid_id_3'].GPID).to.be.equal('bid_id_3_gpid');
       expect(payload.PageRefreshed).to.equal(false);
       expect(payload.pbjs_version).to.equal('$prebid.version$');
     });

@@ -81,6 +81,7 @@ export const spec = {
         accumulator[bidReq.bidId] = {};
         accumulator[bidReq.bidId].PlacementID = bidReq.params.placement;
         accumulator[bidReq.bidId].TransactionID = bidReq.ortb2Imp?.ext?.tid;
+        accumulator[bidReq.bidId].GPID = bidReq.ortb2Imp?.ext?.gpid;
         accumulator[bidReq.bidId].Width = size.width;
         accumulator[bidReq.bidId].Height = size.height;
         accumulator[bidReq.bidId].AvailableSizes = sizesArray.join(',');
