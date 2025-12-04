@@ -659,7 +659,7 @@ describe('Adyoulike Adapter', function () {
       expect(request.url).to.contain(getEndpoint());
     });
 
-    it('should add gdpr/usp/gpp consent information and SChain to the request', function () {
+    it('should add gdpr/usp/gpp/coppa consent information and SChain to the request', function () {
       let consentString = 'BOJ8RZsOJ8RZsABAB8AAAAAZ+A==';
       let uspConsentData = '1YCC';
       let gppString = 'DBACNY~CPXxRfAPXxRfAAfKABENB-CgAAAAAAAAAAYgAAAAAAAA~1YNN';
@@ -681,6 +681,8 @@ describe('Adyoulike Adapter', function () {
 
       bidderRequest.bids = bidRequestWithSinglePlacement;
 
+      config.setConfig({coppa: true});
+
       const request = spec.buildRequests(bidRequestWithSinglePlacement, bidderRequest);
       const payload = JSON.parse(request.data);
 
@@ -690,7 +692,10 @@ describe('Adyoulike Adapter', function () {
       expect(payload.uspConsent).to.exist.and.to.equal(uspConsentData);
       expect(payload.gppConsent.gppString).to.exist.and.to.equal(gppString);
       expect(payload.gppConsent.gppSid).to.exist.and.to.deep.equal(applicableSections);
+      expect(payload.coppa).to.exist.and.to.equal(1);
       expect(payload.Bids.bid_id_0.SChain).to.exist.and.to.deep.equal(bidRequestWithSinglePlacement[0].schain);
+
+      config.setConfig({coppa: false});
     });
 
     it('should not set a default value for gdpr consentRequired', function () {

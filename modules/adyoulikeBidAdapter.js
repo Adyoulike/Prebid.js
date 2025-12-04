@@ -141,6 +141,8 @@ export const spec = {
       }
     }
 
+    payload.coppa = config.getConfig('coppa') === true ? 1 : 0
+
     if (bidderRequest.ortb2) {
       payload.ortb2 = bidderRequest.ortb2;
     }
